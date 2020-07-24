@@ -1,4 +1,9 @@
-FROM pytorch/pytorch:1.5.1-cuda10.1-cudnn7-devel
+ARG PYVERSION="3.6.5"
+ARG PYTORCH="1.5.1"
+ARG CUDA="10.1"
+ARG CUDNN="7"
+
+FROM pytorch/pytorch:${PYTORCH}-cuda${CUDA}-cudnn${CUDNN}-devel
 
 RUN apt-get update && apt-get install -y \
     wget \
@@ -23,11 +28,11 @@ RUN curl -sLo ~/miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-py38
  && chmod +x ~/miniconda.sh \
  && ~/miniconda.sh -b -p ~/miniconda \
  && rm ~/miniconda.sh \
- && conda install -y python==3.6.5 \
+ && conda install -y python==${PYVERSION} \
  && conda clean -ya
 
-# CUDA 10.2-specific steps
-RUN conda install -y -c pytorch cudatoolkit=10.1 \
+# instal pytorch-CUDA
+RUN conda install -y -c pytorch cudatoolkit=${CUDA} \
  && conda clean -ya
 
 # requirements and apex install
