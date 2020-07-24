@@ -1,0 +1,33 @@
+input:
+  train: /root/workspace/kaggle-panda/data/train.csv
+  images: /root/workspace/kaggle-panda/data/train_images
+  patient: /root/workspace/kaggle-panda/data/duplicates/patient_image_id_20200622_0030.csv
+  output: /root/workspace/kaggle-panda/data/cv_folds/
+  marker: /root/workspace/kaggle-panda/data/sus/marker_image_ids.p
+  num_tiles: /root/workspace/kaggle-panda/data/tiles_lafoss_marker_th/train_tiles_224_0_1_0/num_tiles.csv
+  blacklist: /root/workspace/kaggle-panda/data/sus/blacklist_image_ids.p
+
+cv_folds:
+  test_size: 0.1
+  num_folds: 10
+  index_col: patient_id
+  train_cols:
+    - marker
+  stratify_test:
+    - isup_grade
+    - data_provider
+  stratify_val:
+    - isup_grade
+    - data_provider
+    - marker
+  random_state: 42069
+  # session_name: cv_folds_marker_20200718_2226
+
+tag: marker
+
+img_stats:
+  root:  /root/workspace/kaggle-panda/data/tiles_lafoss_marker_th/train_tiles_224_0_1_0
+  stratify:
+    - data_provider
+  batch_size: 1
+  num_workers: 6

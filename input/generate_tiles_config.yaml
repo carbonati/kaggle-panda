@@ -1,0 +1,15 @@
+input:
+  train: /home/tanner/workspace/kaggle-panda/data/train.csv
+  images: /home/tanner/workspace/kaggle-panda/data/train_images
+  # masks: /home/tanner/workspace/kaggle-panda/data/train_label_masks
+  output: /home/tanner/workspace/kaggle-panda/data/tiles_lafoss_marker_th
+  marker_ids: /home/tanner/workspace/kaggle-panda/data/sus/marker_image_ids.p
+  blacklist: /home/tanner/workspace/kaggle-panda/data/sus/blacklist_image_ids.p
+
+tiles:
+  img_size: 224
+  num_tiles: 0
+  resolution_idx: 1
+  pad_mode: 0
+  return_meta: true
+  th: 0.03

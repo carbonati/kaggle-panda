@@ -1,0 +1,51 @@
+input:
+  root: /home/tanner/workspace/kaggle-panda/data/tiles_lafoss_marker_th
+  train: /home/tanner/workspace/kaggle-panda/data/train.csv
+  patient: /home/tanner/workspace/kaggle-panda/data/duplicates/patient_image_id_20200622_0030.csv
+  cv_folds: /home/tanner/workspace/kaggle-panda/data/cv_folds/cv_folds_marker_20200704_0011
+  blacklist: /home/tanner/workspace/kaggle-panda/data/sus/blacklist_image_ids.p
+  ckpt_dir: /home/tanner/workspace/kaggle-panda/prod_models/tile_exp_4/resnet34_l1_smth_300_36_1_rand_16_concat_adam_one_cycle_20200710_0639
+
+output:
+  models: /home/tanner/workspace/kaggle-panda/blend_models
+
+model:
+  method: blend
+  params:
+    num_classes: 1
+
+sampler:
+  method: batch
+
+optimizer:
+  method: adam
+  params:
+    lr: 0.00001
+
+scheduler:
+  method: one_cycle
+  params:
+    max_lr: 0.0005
+
+trainer:
+  task: reg
+  max_norm: 5
+
+criterion:
+  method: l1_smth
+
+postprocessor:
+  method: optimized_rounder
+
+# min_tiles: 6
+target_col: isup_grade
+num_classes: 6
+steps: 40
+batch_size: 4
+eval_batch_size: 12
+num_bags: 5
+eval_test: true
+
+num_workers: 8
+distributed: false
+random_state: 42069

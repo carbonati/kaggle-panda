@@ -1,0 +1,77 @@
+input:
+  train: /root/workspace/kaggle-panda/data/train.csv
+  images: /mnt/sda/workspace/kaggle-panda/data/tiles_lafoss_marker_th/train_tiles_300_0_1_0
+  masks: /root/workspace/kaggle-panda/data/train_masks
+  patient: /root/workspace/kaggle-panda/data/duplicates/patient_image_id_20200622_0030.csv
+  cv_folds: /root/workspace/kaggle-panda/data/cv_folds/cv_folds_marker_20200704_0011
+  models: /root/workspace/kaggle-panda/models
+  blacklist: /root/workspace/kaggle-panda/data/sus/blacklist_image_ids.p
+  num_tiles: /mnt/sda/workspace/kaggle-panda/data/tiles_lafoss_marker_th/train_tiles_300_0_1_0/num_tiles.csv
+
+data:
+  img_size: 300
+  num_tiles: 64
+  resolution_idx: 1
+  pad_mode: 0
+  replace: true
+  sample_random: true
+  seed: 42069
+
+augmentations:
+  tta_val: false
+  tta_test: true
+  tile:
+    normalize:
+      mean: null
+      std: null
+    transpose:
+      p: 0.5
+    vertical:
+      p: 0.5
+    horizontal:
+      p: 0.5
+
+sampler:
+  method: batch
+
+optimizer:
+  method: adam
+  params:
+    lr: 0.00001
+
+scheduler:
+  method: one_cycle
+  params:
+    max_lr: 0.0005
+
+model:
+  arch: resnet34
+  pool_params:
+    method: concat
+  num_classes: 1
+
+trainer:
+  task: reg
+  max_norm: 3
+
+criterion:
+  method: l1_smth
+
+postprocessor:
+  method: optimized_rounder
+
+cv_folds:
+  index_col: patient_id
+
+min_tiles: 6
+target_col: isup_grade
+num_classes: 6
+batch_size: 8
+eval_batch_size: 16
+test_batch_size: 12
+eval_test: true
+num_bags: 5
+
+num_workers: 8
+distributed: false
+random_state: 42069
