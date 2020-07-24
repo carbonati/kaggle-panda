@@ -8,7 +8,7 @@ from core import layers
 from data.samplers import BatchStratifiedSampler
 from evaluation import postprocess
 
-
+# update root path for pretrained models
 ROOT_PATH = '/root/workspace/kaggle-panda'
 
 
