@@ -7,7 +7,7 @@ efficientnet-pytorch==0.6.3
 future==0.18.2
 imageio==2.8.0
 imgaug==0.2.6
-ipython==7.15.0
+ipython==7.16.3
 ipython-genutils==0.2.0
 jedi==0.17.1
 joblib==0.15.1
